@@ -54,7 +54,7 @@ jobs:
     - name: Modify the swap partition size
       run: |
         sudo swapoff -a
-        sudo fallocate -l 50G /swapfile
+        sudo fallocate -l 32G /swapfile
         sudo chmod 600 /swapfile
         sudo mkswap /swapfile
         sudo swapon /swapfile
