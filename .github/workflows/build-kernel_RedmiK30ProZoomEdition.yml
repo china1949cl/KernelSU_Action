@@ -1,4 +1,4 @@
-name: Build Kernel
+name: Build Kernel(RedmiK30ProZoomEdition)
 on:
   watch:
     types: [started]
