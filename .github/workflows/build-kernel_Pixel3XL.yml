@@ -1,4 +1,4 @@
-name: Build Kernel
+name: Build Kernel(Pixel3XL)
 on:
   watch:
     types: [started]
