@@ -69,16 +69,6 @@ jobs:
         wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/${{ env.CLANG_BRANCH }}/clang-${{ env.CLANG_VERSION }}.tar.gz
         tar -C clang-aosp/ -zxvf clang-${{ env.CLANG_VERSION }}.tar.gz
         
-    - name: Download mkdtimg
-      run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace
-        mkdir my-mkdtimg
-        cd my-mkdtimg
-        wget https://android.googlesource.com/platform/system/libufdt/+archive/refs/heads/master/utils.tar.gz
-        tar xvf utils.tar.gz
-        sudo cp src/mkdtboimg.py /usr/bin/mkdtimg
-        sudo chmod a+x /usr/bin/mkdtimg
-
     - name: Download Custom-Clang
       if: env.USE_CUSTOM_CLANG == 'true'
       run: |
@@ -175,8 +165,6 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/clang-aosp/bin:$PATH
-        export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kernel_workspace/clang-aosp/lib64:$LD_LIBRARY_PATH
-        export LD=ld.lld
         export KBUILD_BUILD_HOST=Github-Action
         export KBUILD_BUILD_USER=$(echo ${{ github.actor }} | tr A-Z a-z)
         make -j$(nproc --all) CC=clang O=out ARCH=${{ env.ARCH }} ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} ${{ env.KERNEL_CONFIG }}
